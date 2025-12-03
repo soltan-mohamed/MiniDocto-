@@ -8,6 +8,7 @@ function DashboardPage() {
     confirmedAppointments: 0,
     totalSlots: 0,
     availableSlots: 0,
+    unavailableSlots: 0,
   })
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
@@ -34,6 +35,7 @@ function DashboardPage() {
         ).length,
         totalSlots: slots.length,
         availableSlots: slots.filter((s) => s.available).length,
+        unavailableSlots: slots.filter((s) => !s.available).length,
       })
     } catch (error) {
       console.error('Erreur lors du chargement des données:', error)
@@ -87,6 +89,14 @@ function DashboardPage() {
           <div className="stat-content">
             <h3>{stats.availableSlots}</h3>
             <p>Créneaux disponibles</p>
+          </div>
+        </div>
+
+        <div className="stat-card">
+          <div className="stat-icon">🚫</div>
+          <div className="stat-content">
+            <h3>{stats.unavailableSlots}</h3>
+            <p>Créneaux indisponibles</p>
           </div>
         </div>
       </div>

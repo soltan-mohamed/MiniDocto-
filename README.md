@@ -318,5 +318,84 @@ Mohamed Soltan
 
 ---
 
-**Version:** 2.0.0
+**Version:** 2.1.0
+
+## 🆕 Nouveautés - Version 2.1.0 
+
+### ✅ Amélioration de la gestion des créneaux horaires
+
+#### 1. Validation anti-chevauchement des créneaux
+Le système empêche maintenant la création de créneaux qui se chevauchent temporellement :
+
+**Fonctionnement :**
+- Lors de la création d'un nouveau créneau, le système vérifie automatiquement si l'horaire choisi chevauche un créneau existant
+- Si un chevauchement est détecté, une erreur claire est affichée : *"Ce créneau chevauche un créneau existant. Veuillez choisir un autre horaire."*
+- La vérification prend en compte tous les scénarios de chevauchement :
+  - Créneau qui englobe un créneau existant
+  - Créneau qui commence pendant un créneau existant
+  - Créneau qui se termine pendant un créneau existant
+
+**Exemple :**
+```
+Créneau existant : 08:00 - 10:00
+❌ Ne peut pas créer : 08:30 - 09:30 (chevauche)
+❌ Ne peut pas créer : 07:00 - 08:30 (chevauche)
+❌ Ne peut pas créer : 09:00 - 11:00 (chevauche)
+✅ Peut créer : 10:00 - 12:00 (ne chevauche pas)
+✅ Peut créer : 06:00 - 08:00 (ne chevauche pas)
+```
+
+#### 2. Mise à jour automatique du statut des créneaux expirés
+Les créneaux passés sont automatiquement marqués comme indisponibles sans nécessiter de rafraîchissement manuel :
+
+**Fonctionnement :**
+- Une tâche planifiée s'exécute automatiquement toutes les 60 secondes côté serveur
+- Les créneaux dont l'heure de fin est dépassée sont automatiquement marqués comme indisponibles
+- Le frontend actualise la liste des créneaux toutes les 60 secondes pour refléter les changements en temps réel
+- Interface utilisateur toujours à jour sans intervention manuelle
+
+**Avantages :**
+- 🚫 Les créneaux passés ne peuvent plus être réservés par erreur
+- ⏱️ Mise à jour en temps quasi-réel du statut des créneaux
+- 🔄 Synchronisation automatique entre le serveur et l'interface
+- 👍 Meilleure expérience utilisateur
+
+### 🔧 Améliorations techniques
+
+**Backend (Spring Boot) :**
+- Ajout de `findOverlappingSlots()` dans `TimeSlotRepository` : Requête MongoDB optimisée pour détecter les chevauchements
+- Ajout de `findByAvailableAndEndTimeBefore()` : Recherche efficace des créneaux expirés
+- Implémentation de `@Scheduled` dans `TimeSlotService` : Tâche automatique de mise à jour
+- Activation de `@EnableScheduling` dans `MiniDoctoApplication`
+- Amélioration de la validation lors de la création de créneaux
+
+**Frontend (React) :**
+- Gestion améliorée des erreurs avec affichage des messages détaillés du serveur
+- Ajout d'un `setInterval` pour l'actualisation automatique des créneaux
+- Interface utilisateur réactive avec feedback en temps réel
+- Nettoyage automatique des intervalles lors du démontage des composants
+
+### 📝 Instructions pour tester les nouvelles fonctionnalités
+
+**Test de validation anti-chevauchement :**
+1. Connectez-vous en tant que professionnel
+2. Créez un créneau : 08:00 - 10:00
+3. Essayez de créer un créneau chevauchant : 08:30 - 09:30
+4. Le système doit refuser avec un message d'erreur explicite
+
+**Test de mise à jour automatique :**
+1. Créez un créneau avec une heure de fin proche (ex: dans 2 minutes)
+2. Attendez que l'heure de fin soit dépassée
+3. Après maximum 1 minute, le créneau devrait automatiquement passer à "Réservé" (indisponible)
+4. Aucun rafraîchissement manuel de la page n'est nécessaire
+
+### ⚙️ Configuration avancée
+
+La fréquence de mise à jour automatique peut être personnalisée dans `TimeSlotService.java` :
+```java
+@Scheduled(fixedRate = 60000)
+```
+
+Pour ajuster la fréquence, modifiez la valeur en millisecondes (ex: 30000 pour 30 secondes).
+
 

@@ -8,6 +8,7 @@ function TimeSlotsPage() {
   const [slots, setSlots] = useState([])
   const [loading, setLoading] = useState(true)
   const [showModal, setShowModal] = useState(false)
+  const [error, setError] = useState('')
   const [formData, setFormData] = useState({
     startTime: '',
     endTime: '',
@@ -15,6 +16,12 @@ function TimeSlotsPage() {
 
   useEffect(() => {
     loadSlots()
+    
+    const intervalId = setInterval(() => {
+      loadSlots()
+    }, 60000)
+    
+    return () => clearInterval(intervalId)
   }, [])
 
   const loadSlots = async () => {
@@ -30,13 +37,15 @@ function TimeSlotsPage() {
 
   const handleCreateSlot = async (e) => {
     e.preventDefault()
+    setError('')
     try {
       await timeSlotService.createSlot(formData)
       setShowModal(false)
       setFormData({ startTime: '', endTime: '' })
       loadSlots()
     } catch (error) {
-      alert('Erreur lors de la création du créneau')
+      const errorMessage = error.response?.data?.message || 'Erreur lors de la création du créneau'
+      setError(errorMessage)
     }
   }
 
@@ -84,7 +93,7 @@ function TimeSlotsPage() {
               className={`slot-card ${slot.available ? 'available' : 'booked'}`}
             >
               <div className="slot-status">
-                {slot.available ? '🟢 Disponible' : '🔴 Réservé'}
+                {slot.available ? '🟢 Disponible' : '🔴 Indisponible'}
               </div>
               <div className="slot-info">
                 <p className="slot-date">
@@ -95,14 +104,12 @@ function TimeSlotsPage() {
                   {format(new Date(slot.endTime), 'HH:mm')}
                 </p>
               </div>
-              {slot.available && (
-                <button
-                  className="btn-delete"
-                  onClick={() => handleDeleteSlot(slot.id)}
-                >
-                  🗑️ Supprimer
-                </button>
-              )}
+              <button
+                className="btn-delete"
+                onClick={() => handleDeleteSlot(slot.id)}
+              >
+                🗑️ Supprimer
+              </button>
             </div>
           ))}
         </div>
@@ -112,6 +119,18 @@ function TimeSlotsPage() {
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Nouveau créneau</h2>
+            {error && (
+              <div className="error-message" style={{
+                backgroundColor: '#fee',
+                color: '#c33',
+                padding: '10px',
+                borderRadius: '5px',
+                marginBottom: '15px',
+                border: '1px solid #fcc'
+              }}>
+                ⚠️ {error}
+              </div>
+            )}
             <form onSubmit={handleCreateSlot}>
               <div className="form-group">
                 <label>Date et heure de début</label>
@@ -139,7 +158,10 @@ function TimeSlotsPage() {
                 <button
                   type="button"
                   className="btn-secondary"
-                  onClick={() => setShowModal(false)}
+                  onClick={() => {
+                    setShowModal(false)
+                    setError('')
+                  }}
                 >
                   Annuler
                 </button>

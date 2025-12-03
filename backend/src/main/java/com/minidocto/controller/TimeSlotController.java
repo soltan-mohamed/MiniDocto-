@@ -29,6 +29,7 @@ public class TimeSlotController {
     
     @GetMapping("/professional/{professionalId}/available")
     public ResponseEntity<List<TimeSlot>> getAvailableSlots(@PathVariable String professionalId) {
+        timeSlotService.updateExpiredSlots();
         List<TimeSlot> slots = timeSlotService.getAvailableSlots(professionalId);
         return ResponseEntity.ok(slots);
     }
