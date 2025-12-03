@@ -1,0 +1,16 @@
+com\minidocto\dto\LoginRequest.class
+com\minidocto\controller\AuthController.class
+com\minidocto\security\JwtAuthenticationFilter.class
+com\minidocto\model\User.class
+com\minidocto\exception\ErrorResponse.class
+com\minidocto\MiniDoctoApplication.class
+com\minidocto\exception\BadRequestException.class
+com\minidocto\dto\AuthResponse.class
+com\minidocto\exception\GlobalExceptionHandler.class
+com\minidocto\repository\UserRepository.class
+com\minidocto\exception\NotFoundException.class
+com\minidocto\service\AuthService.class
+com\minidocto\security\JwtTokenProvider.class
+com\minidocto\config\SecurityConfig.class
+com\minidocto\model\UserRole.class
+com\minidocto\dto\RegisterRequest.class
