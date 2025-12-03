@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import DashboardPage from './pages/DashboardPage'
 import Layout from './components/Layout'
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
           path="/login"
           element={
             isAuthenticated ? (
-              <Navigate to="/" replace />
+              <Navigate to="/dashboard" replace />
             ) : (
               <LoginPage onLogin={handleLogin} />
             )
@@ -39,7 +40,7 @@ function App() {
           path="/register"
           element={
             isAuthenticated ? (
-              <Navigate to="/" replace />
+              <Navigate to="/dashboard" replace />
             ) : (
               <RegisterPage onRegister={handleLogin} />
             )
@@ -51,7 +52,8 @@ function App() {
             isAuthenticated ? (
               <Layout onLogout={handleLogout}>
                 <Routes>
-                  <Route path="*" element={<Navigate to="/" replace />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>
               </Layout>
             ) : (
