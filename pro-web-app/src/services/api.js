@@ -34,4 +34,27 @@ export const authService = {
   },
 }
 
+export const timeSlotService = {
+  getMySlots: async () => {
+    const response = await api.get('/timeslots/my-slots')
+    return response.data
+  },
+
+  createSlot: async (data) => {
+    const response = await api.post('/timeslots', data)
+    return response.data
+  },
+
+  deleteSlot: async (slotId) => {
+    await api.delete(`/timeslots/${slotId}`)
+  },
+}
+
+export const appointmentService = {
+  getProfessionalAppointments: async () => {
+    const response = await api.get('/appointments/professional')
+    return response.data
+  },
+}
+
 export default api

@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
+import TimeSlotsPage from './pages/TimeSlotsPage'
+import AppointmentsPage from './pages/AppointmentsPage'
 import Layout from './components/Layout'
 
 function App() {
@@ -53,6 +55,8 @@ function App() {
               <Layout onLogout={handleLogout}>
                 <Routes>
                   <Route path="/dashboard" element={<DashboardPage />} />
+                  <Route path="/timeslots" element={<TimeSlotsPage />} />
+                  <Route path="/appointments" element={<AppointmentsPage />} />
                   <Route path="*" element={<Navigate to="/dashboard" replace />} />
                 </Routes>
               </Layout>
