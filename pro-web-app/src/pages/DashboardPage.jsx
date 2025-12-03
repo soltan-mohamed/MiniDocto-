@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { appointmentService, timeSlotService } from '../services/api'
+import StatsChart from '../components/StatsChart'
 import './DashboardPage.css'
 
 function DashboardPage() {
@@ -100,6 +101,9 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+
+
+      <StatsChart stats={stats} />
 
       <div className="dashboard-info">
         <div className="info-card">
