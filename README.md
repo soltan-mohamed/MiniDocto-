@@ -220,7 +220,97 @@ curl -X GET http://localhost:8080/api/professionals/list
 4. Poussez vers la branche (`git push origin feature/nouvelle-fonctionnalite`)
 5. Ouvrez une Pull Request
 
+# MiniDocto+ Pro Web App
 
+Application web professionnelle pour la gestion de rendez-vous médicaux, développée avec React et Vite.
+
+## 🚀 Fonctionnalités
+
+- 📅 Gestion des créneaux horaires
+- 🩺 Prise de rendez-vous
+- 👤 Authentification utilisateur (Login/Register)
+- 📊 Tableau de bord personnalisé
+- 🔐 Protection des routes avec authentification
+
+## 🛠️ Technologies
+
+- **React** 18.2.0 - Bibliothèque UI
+- **Vite** 5.0.8 - Build tool et dev server
+- **React Router DOM** 6.20.0 - Gestion du routing
+- **Axios** 1.6.2 - Client HTTP
+- **React Calendar** 4.7.0 - Composant calendrier
+- **date-fns** 3.0.0 - Manipulation de dates
+
+## 📋 Prérequis
+
+- Node.js (version 16 ou supérieure)
+- npm ou yarn
+
+## 🔧 Installation
+
+1. Cloner le repository :
+```bash
+git clone https://github.com/soltan-mohamed/MiniDocto-.git
+cd pro-web-app
+```
+
+2. Installer les dépendances :
+```bash
+npm install
+```
+
+## 🚀 Démarrage
+
+### Mode développement
+```bash
+npm run dev
+```
+L'application sera accessible sur `http://localhost:3000`
+
+### Build de production
+```bash
+npm run build
+```
+
+### Prévisualiser le build
+```bash
+npm run preview
+```
+
+## 📁 Structure du projet
+
+```
+pro-web-app/
+├── src/
+│   ├── components/     # Composants réutilisables
+│   ├── pages/         # Pages de l'application
+│   │   ├── LoginPage.jsx
+│   │   ├── RegisterPage.jsx
+│   │   ├── DashboardPage.jsx
+│   │   ├── TimeSlotsPage.jsx
+│   │   └── AppointmentsPage.jsx
+│   ├── services/      # Services API
+│   ├── App.jsx        # Composant principal
+│   ├── main.jsx       # Point d'entrée
+│   └── index.css      # Styles globaux
+├── public/            # Assets statiques
+├── index.html         # Template HTML
+├── package.json
+├── vite.config.js
+└── .gitignore
+```
+
+## 🔐 Authentification
+
+L'application utilise un système d'authentification basé sur les tokens JWT stockés dans le localStorage. Les routes protégées redirigent automatiquement vers la page de connexion si l'utilisateur n'est pas authentifié.
+
+## 👥 Pages disponibles
+
+- `/login` - Page de connexion
+- `/register` - Page d'inscription
+- `/dashboard` - Tableau de bord (protégé)
+- `/time-slots` - Gestion des créneaux horaires (protégé)
+- `/appointments` - Gestion des rendez-vous (protégé)
 
 ## 👨‍💻 Auteur
 
@@ -228,5 +318,5 @@ Mohamed Soltan
 
 ---
 
-**Version:** 1.0.0
+**Version:** 2.0.0
 
