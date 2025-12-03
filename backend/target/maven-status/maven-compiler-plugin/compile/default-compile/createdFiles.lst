@@ -10,6 +10,7 @@ com\minidocto\exception\ErrorResponse.class
 com\minidocto\dto\AppointmentRequest.class
 com\minidocto\exception\BadRequestException.class
 com\minidocto\exception\GlobalExceptionHandler.class
+com\minidocto\service\ReviewService.class
 com\minidocto\repository\UserRepository.class
 com\minidocto\model\TimeSlot.class
 com\minidocto\exception\NotFoundException.class
@@ -17,12 +18,16 @@ com\minidocto\security\JwtTokenProvider.class
 com\minidocto\controller\ProfessionalController.class
 com\minidocto\service\AppointmentService.class
 com\minidocto\model\AppointmentStatus.class
+com\minidocto\model\Review.class
 com\minidocto\controller\TimeSlotController.class
 com\minidocto\model\Appointment.class
 com\minidocto\MiniDoctoApplication.class
 com\minidocto\dto\AuthResponse.class
+com\minidocto\repository\ReviewRepository.class
+com\minidocto\controller\ReviewController.class
 com\minidocto\service\ProfessionalService.class
 com\minidocto\dto\ProfessionalResponse.class
+com\minidocto\dto\ReviewRequest.class
 com\minidocto\service\AuthService.class
 com\minidocto\config\SecurityConfig.class
 com\minidocto\controller\AppointmentController.class
