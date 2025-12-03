@@ -1,7 +1,9 @@
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\config\SecurityConfig.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\controller\AuthController.java
+C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\controller\ProfessionalController.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\dto\AuthResponse.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\dto\LoginRequest.java
+C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\dto\ProfessionalResponse.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\dto\RegisterRequest.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\exception\BadRequestException.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\exception\GlobalExceptionHandler.java
@@ -13,3 +15,4 @@ C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minid
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\security\JwtAuthenticationFilter.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\security\JwtTokenProvider.java
 C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\service\AuthService.java
+C:\Users\HP-EliteBook-2025_Rf\Desktop\MiniDocto+\backend\src\main\java\com\minidocto\service\ProfessionalService.java

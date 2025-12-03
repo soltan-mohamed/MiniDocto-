@@ -26,14 +26,13 @@ public class User {
     
     private String phone;
     
-    private UserRole role; // PATIENT or PROFESSIONAL
-    
-    // Champs spécifiques aux professionnels
-    private String speciality; // Spécialité médicale
+    private UserRole role;
+
+    private String speciality;
     
     private String description;
     
-    private Integer score; // Note entre 0 et 100
+    private Integer score;
     
     private String address;
     

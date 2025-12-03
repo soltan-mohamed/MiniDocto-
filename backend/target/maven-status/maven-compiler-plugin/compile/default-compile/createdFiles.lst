@@ -7,10 +7,13 @@ com\minidocto\MiniDoctoApplication.class
 com\minidocto\exception\BadRequestException.class
 com\minidocto\dto\AuthResponse.class
 com\minidocto\exception\GlobalExceptionHandler.class
+com\minidocto\service\ProfessionalService.class
+com\minidocto\dto\ProfessionalResponse.class
 com\minidocto\repository\UserRepository.class
 com\minidocto\exception\NotFoundException.class
 com\minidocto\service\AuthService.class
 com\minidocto\security\JwtTokenProvider.class
 com\minidocto\config\SecurityConfig.class
 com\minidocto\model\UserRole.class
+com\minidocto\controller\ProfessionalController.class
 com\minidocto\dto\RegisterRequest.class
