@@ -788,6 +788,256 @@ Mohamed Soltan
 
 **Version Mobile:** 1.0.0
 
+## 📊 Firebase Analytics - Suivi et Monitoring
+
+### Configuration Firebase
+
+L'application intègre **Firebase Analytics** pour le suivi en temps réel des utilisateurs et des événements sur les plateformes mobile et web.
+
+**Projet Firebase :** `minidoctoplus`
+- **Project ID :** minidoctoplus
+- **App ID Web :** 1:916796032700:web:9fe77786bf1e64117e72b9
+- **App ID Android :** 1:916796032700:android:9fe77786bf1e64117e72b9
+- **Measurement ID :** G-6EJNTRZMPH
+
+### 📱 Intégration Mobile (Flutter)
+
+#### Configuration
+```dart
+// firebase_options.dart
+static const FirebaseOptions web = FirebaseOptions(
+  apiKey: 'AIzaSyCvFtmoXC7jOl47R5xOPAEn4y3yRenZb_o',
+  authDomain: 'minidoctoplus.firebaseapp.com',
+  projectId: 'minidoctoplus',
+  storageBucket: 'minidoctoplus.firebasestorage.app',
+  messagingSenderId: '916796032700',
+  appId: '1:916796032700:web:9fe77786bf1e64117e72b9',
+  measurementId: 'G-6EJNTRZMPH',
+);
+```
+
+#### Dépendances
+```yaml
+dependencies:
+  firebase_core: ^4.2.1
+  firebase_analytics: ^12.0.4
+```
+
+#### Événements Trackés
+
+**Authentification :**
+- `login` - Connexion utilisateur avec méthode (email)
+- `sign_up` - Inscription avec rôle utilisateur (PATIENT)
+
+**Rendez-vous :**
+- `appointment_booked` - Réservation avec ID professionnel, nom, date
+- `appointment_cancelled` - Annulation avec ID rendez-vous
+
+**Avis :**
+- `review_submitted` - Soumission d'avis avec note et ID rendez-vous
+
+**Navigation :**
+- `view_professional` - Consultation d'un professionnel avec spécialité
+
+**Propriétés Utilisateur :**
+- `user_id` - ID unique de l'utilisateur
+- `user_role` - Rôle (PATIENT/PROFESSIONAL)
+
+#### Service Analytics
+```dart
+// lib/services/analytics_service.dart
+class AnalyticsService {
+  static Future<void> logLogin(String method) async {
+    await FirebaseAnalytics.instance.logLogin(loginMethod: method);
+  }
+  
+  static Future<void> logAppointmentBooked({
+    required String professionalId,
+    required String professionalName,
+    required String date,
+  }) async {
+    await FirebaseAnalytics.instance.logEvent(
+      name: 'appointment_booked',
+      parameters: {
+        'professional_id': professionalId,
+        'professional_name': professionalName,
+        'appointment_date': date,
+      },
+    );
+  }
+}
+```
+
+### 🌐 Intégration Web (React)
+
+#### Configuration
+L'intégration utilise les CDN Firebase pour éviter les dépendances npm :
+
+```html
+<!-- index.html -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvFtmoXC7jOl47R5xOPAEn4y3yRenZb_o",
+    authDomain: "minidoctoplus.firebaseapp.com",
+    projectId: "minidoctoplus",
+    storageBucket: "minidoctoplus.firebasestorage.app",
+    messagingSenderId: "916796032700",
+    appId: "1:916796032700:web:9fe77786bf1e64117e72b9",
+    measurementId: "G-6EJNTRZMPH"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  window.firebaseAnalytics = analytics;
+</script>
+```
+
+#### Service Analytics Web
+```javascript
+// src/services/analytics.js
+export const analytics = {
+  logLogin: (method = 'email') => {
+    window.logAnalyticsEvent('login', { method });
+  },
+  
+  logAppointmentCreated: (appointmentData) => {
+    window.logAnalyticsEvent('appointment_created', {
+      appointment_id: appointmentData.id,
+      patient_name: appointmentData.patientName,
+      date: appointmentData.date,
+    });
+  },
+  
+  logScoreUpdate: (newScore, oldScore) => {
+    window.logAnalyticsEvent('score_updated', {
+      new_score: newScore,
+      old_score: oldScore,
+    });
+  },
+};
+```
+
+#### Événements Trackés (Web)
+- `login` / `sign_up` - Authentification professionnelle
+- `appointment_created` - Création de rendez-vous
+- `appointment_status_changed` - Changement de statut
+- `time_slot_created` - Création de créneaux horaires
+- `score_updated` - Mise à jour du score professionnel
+- `page_view` - Navigation entre les pages
+
+### 📈 Métriques Collectées
+
+**Données Automatiques :**
+- 👥 Utilisateurs actifs (quotidiens, hebdomadaires, mensuels)
+- 📱 Sessions et durée moyenne
+- 🌍 Localisation géographique
+- 📊 Démographie des utilisateurs
+- 💻 Appareils et navigateurs utilisés
+- 🔄 Taux de rétention
+
+**Événements Personnalisés :**
+- Nombre de connexions/inscriptions
+- Rendez-vous réservés par jour
+- Annulations de rendez-vous
+- Avis soumis avec distribution des notes
+- Professionnels consultés
+- Créneaux horaires créés
+
+### 🔍 Accès aux Analytics
+
+**Console Firebase :**
+1. Connectez-vous à https://console.firebase.google.com
+2. Sélectionnez le projet "minidoctoplus"
+3. Naviguez vers **Analytics** → **Dashboard**
+
+**Sections disponibles :**
+- **Vue d'ensemble** : Métriques principales en temps réel
+- **Événements** : Liste détaillée de tous les événements
+- **Conversions** : Suivi des objectifs clés
+- **Audiences** : Segmentation des utilisateurs
+- **Entonnoirs** : Analyse du parcours utilisateur
+
+### ⚙️ Configuration Android
+
+**Fichiers Gradle :**
+```gradle
+// android/build.gradle
+buildscript {
+  dependencies {
+    classpath 'com.google.gms:google-services:4.4.4'
+  }
+}
+
+// android/app/build.gradle
+plugins {
+  id 'com.google.gms.google-services'
+}
+
+dependencies {
+  implementation platform('com.google.firebase:firebase-bom:34.6.0')
+  implementation 'com.google.firebase:firebase-analytics'
+}
+```
+
+**Fichier de configuration :**
+- Emplacement : `android/app/google-services.json`
+- Téléchargé depuis Firebase Console
+- Contient les clés API et identifiants du projet
+
+### 🎯 Utilisation pour Monitoring
+
+**Cas d'usage :**
+- 📊 **Monitoring des performances** : Suivre l'engagement utilisateur
+- 🐛 **Détection d'anomalies** : Identifier les drops d'utilisation
+- 📈 **Optimisation** : Analyser les parcours utilisateurs
+- 🎯 **Objectifs** : Mesurer les taux de conversion
+- 🔔 **Alertes** : Notifications sur événements critiques
+
+**Exemples de métriques clés :**
+- Taux de conversion inscription → premier rendez-vous
+- Temps moyen entre inscription et première réservation
+- Professionnels les plus consultés
+- Heures de pointe d'utilisation
+- Taux d'annulation des rendez-vous
+
+### 📝 Notes Importantes
+
+⚠️ **Sécurité :**
+- Les clés API Firebase sont publiques et peuvent être exposées dans le frontend
+- La sécurité repose sur les règles Firebase Security Rules
+- Les événements sensibles ne doivent pas contenir de données personnelles
+
+⚠️ **Limites :**
+- Les données Analytics ont un délai de traitement de 24-48h pour les rapports détaillés
+- Les événements en temps réel sont disponibles dans la section "DebugView"
+- Quota gratuit : 500 événements distincts, données illimitées
+
+🔧 **Mode Debug (Flutter) :**
+```bash
+# Activer le mode debug Analytics
+flutter run --dart-define=FIREBASE_ANALYTICS_DEBUG_MODE=true
+```
+
+🔧 **Mode Debug (Web) :**
+```javascript
+// Ajouter dans la console du navigateur
+gtag('config', 'G-6EJNTRZMPH', { debug_mode: true });
+```
+
+### 🚀 Prochaines Évolutions
+
+- 📧 Notifications push avec Firebase Cloud Messaging
+- 🔐 Authentification Firebase (alternative à JWT)
+- 💾 Cloud Firestore pour données temps réel
+- 📂 Firebase Storage pour images de profil
+- 🔥 Remote Config pour features flags
+- ⚡ Performance Monitoring
+
+---
+
 ## 🆕 Nouveautés - Version 2.1.0 
 
 ### ✅ Amélioration de la gestion des créneaux horaires
