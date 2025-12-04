@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { authService } from '../services/api'
+import analytics from '../services/analytics'
 import './AuthPages.css'
 
 function RegisterPage({ onRegister }) {
@@ -36,6 +37,10 @@ function RegisterPage({ onRegister }) {
       })
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data))
+      
+      // Track sign up event
+      analytics.logSignUp('email')
+      
       onRegister()
     } catch (err) {
       setError(err.response?.data?.message || 'Erreur lors de l\'inscription')

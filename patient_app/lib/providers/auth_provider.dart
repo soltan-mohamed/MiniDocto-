@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user.dart';
 import '../services/api_service.dart';
+import '../services/analytics_service.dart';
 
 class AuthProvider with ChangeNotifier {
   final ApiService _apiService = ApiService();
@@ -37,6 +38,11 @@ class AuthProvider with ChangeNotifier {
       _user = User.fromJson(response);
       _isAuthenticated = true;
       
+      // Track login event
+      await AnalyticsService.logLogin('email');
+      await AnalyticsService.setUserId(_user!.id);
+      await AnalyticsService.setUserRole(_user!.role);
+      
       notifyListeners();
     } catch (e) {
       rethrow;
@@ -52,6 +58,11 @@ class AuthProvider with ChangeNotifier {
       
       _user = User.fromJson(response);
       _isAuthenticated = true;
+      
+      // Track sign up event
+      await AnalyticsService.logSignUp('email');
+      await AnalyticsService.setUserId(_user!.id);
+      await AnalyticsService.setUserRole(_user!.role);
       
       notifyListeners();
     } catch (e) {

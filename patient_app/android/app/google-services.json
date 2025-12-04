@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "916796032700",
+    "project_id": "minidoctoplus",
+    "storage_bucket": "minidoctoplus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916796032700:android:0b314de4e410effe7e72b9",
+        "android_client_info": {
+          "package_name": "com.minidocto.patient_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDszZkypxWGmd7HaYEzsFHOKTxlV7Vjhvw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { authService } from '../services/api'
+import analytics from '../services/analytics'
 import './AuthPages.css'
 
 function LoginPage({ onLogin }) {
@@ -18,6 +19,10 @@ function LoginPage({ onLogin }) {
       const data = await authService.login(email, password)
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data))
+      
+      // Track login event
+      analytics.logLogin('email')
+      
       onLogin()
     } catch (err) {
       setError(err.response?.data?.message || 'Email ou mot de passe incorrect')

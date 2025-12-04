@@ -8,5 +8,34 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- Firebase Analytics -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+      import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCvFtmoXC7jOl47R5xOPAEn4y3yRenZb_o",
+        authDomain: "minidoctoplus.firebaseapp.com",
+        projectId: "minidoctoplus",
+        storageBucket: "minidoctoplus.firebasestorage.app",
+        messagingSenderId: "916796032700",
+        appId: "1:916796032700:web:9fe77786bf1e64117e72b9",
+        measurementId: "G-6EJNTRZMPH"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      
+      // Make analytics available globally
+      window.firebaseAnalytics = analytics;
+      window.logAnalyticsEvent = (eventName, params) => {
+        logEvent(analytics, eventName, params);
+      };
+    </script>
   </body>
 </html>
+
