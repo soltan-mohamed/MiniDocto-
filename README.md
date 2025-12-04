@@ -318,7 +318,475 @@ Mohamed Soltan
 
 ---
 
-**Version:** 2.1.0
+**Version Web** 2.1.0
+
+# MiniDocto+ Patient Mobile App
+
+Application mobile Flutter pour les patients permettant de trouver des professionnels de santé, prendre rendez-vous et laisser des avis.
+
+## 🚀 Fonctionnalités
+
+- 🔐 **Authentification sécurisée** - Inscription et connexion avec JWT
+- 👨‍⚕️ **Recherche de professionnels** - Liste des professionnels avec spécialités et scores
+- 📅 **Prise de rendez-vous** - Consultation des créneaux disponibles et réservation
+- 📋 **Gestion des rendez-vous** - Visualisation, annulation et suivi des rendez-vous
+- ⭐ **Système d'avis** - Notation et commentaires pour les professionnels
+- 🔄 **Synchronisation temps réel** - Actualisation automatique des données
+- 🎨 **Design moderne** - Interface attrayante avec dégradés et animations
+
+## 🛠️ Technologies
+
+- **Flutter** 3.x - Framework de développement mobile
+- **Dart** 3.x - Langage de programmation
+- **Provider** 6.1.1 - Gestion d'état
+- **HTTP** 1.1.2 - Client HTTP pour API REST
+- **Shared Preferences** 2.2.2 - Stockage local sécurisé
+- **Intl** 0.18.1 - Internationalisation et formatage de dates
+
+## 📋 Prérequis
+
+- Flutter SDK (version 3.0 ou supérieure)
+- Dart SDK (version 3.0 ou supérieure)
+- Android Studio / Xcode (pour émulation)
+- Chrome (pour web)
+- Backend MiniDocto+ en cours d'exécution sur `http://localhost:8080`
+
+## 🔧 Installation
+
+### 1. Cloner le projet
+```bash
+git clone https://github.com/soltan-mohamed/MiniDocto-.git
+cd patient_app
+```
+
+### 2. Installer les dépendances
+```bash
+flutter pub get
+```
+
+### 3. Configurer l'API
+Vérifiez que l'URL de l'API est correcte dans `lib/services/api_service.dart` :
+```dart
+static const String baseUrl = 'http://localhost:8080/api';
+```
+
+### 4. Lancer l'application
+
+**Pour Chrome (Web) :**
+```bash
+flutter run -d chrome
+```
+
+**Pour Android :**
+```bash
+flutter run -d android
+```
+
+**Pour iOS :**
+```bash
+flutter run -d ios
+```
+
+## 📁 Structure du Projet
+
+```
+patient_app/
+├── lib/
+│   ├── main.dart                    # Point d'entrée de l'application
+│   ├── models/                      # Modèles de données
+│   │   ├── appointment.dart         # Modèle Rendez-vous
+│   │   ├── professional.dart        # Modèle Professionnel
+│   │   ├── timeslot.dart           # Modèle Créneau horaire
+│   │   ├── user.dart               # Modèle Utilisateur
+│   │   └── review.dart             # Modèle Avis
+│   ├── providers/                   # Gestion d'état avec Provider
+│   │   ├── auth_provider.dart      # Authentification
+│   │   ├── professional_provider.dart
+│   │   └── appointment_provider.dart
+│   ├── screens/                     # Écrans de l'application
+│   │   ├── auth/                   # Authentification
+│   │   │   ├── login_screen.dart
+│   │   │   └── register_screen.dart
+│   │   ├── home/                   # Navigation principale
+│   │   │   └── home_screen.dart
+│   │   ├── professionals/          # Professionnels
+│   │   │   ├── professional_list_screen.dart
+│   │   │   └── professional_detail_screen.dart
+│   │   └── appointments/           # Rendez-vous
+│   │       ├── appointment_list_screen.dart
+│   │       └── rate_appointment_screen.dart
+│   └── services/                    # Services API
+│       └── api_service.dart        # Client HTTP
+├── pubspec.yaml                     # Dépendances Flutter
+└── analysis_options.yaml           # Configuration Dart
+```
+
+## 🎨 Design et Interface
+
+### Palette de Couleurs
+- **Primaire** : Dégradé violet-bleu (#667eea → #764ba2)
+- **Score** : Dégradé doré (#ffd700 → #ffed4e)
+- **Statuts** :
+  - Confirmé : Vert (#4caf50)
+  - En attente : Orange (#ff9800)
+  - Annulé : Rouge (#f44336)
+  - Terminé : Bleu (#2196f3)
+
+### Composants Stylisés
+- **Cartes** : BorderRadius 20px, ombres portées colorées
+- **Boutons** : Dégradés avec effet d'élévation
+- **Champs de texte** : Bordures arrondies avec focus coloré
+- **Badges** : Coins arrondis avec couleurs distinctives
+- **Avatars** : Circulaires avec dégradés et initiales
+
+## 📱 Fonctionnalités Détaillées
+
+### 1. Authentification
+
+#### Inscription
+```dart
+POST /api/auth/register
+{
+  "email": "patient@gmail.com",
+  "password": "password123",
+  "firstName": "Mohamed",
+  "lastName": "Soltan",
+  "phone": "+21655201869",
+  "role": "PATIENT"
+}
+```
+
+**Fonctionnalités :**
+- Validation des champs (email, téléphone, mot de passe min 6 caractères)
+- Design avec dégradé en arrière-plan
+- Feedback visuel en cas d'erreur
+- Redirection automatique après inscription
+
+#### Connexion
+```dart
+POST /api/auth/login
+{
+  "email": "patient@gmail.com",
+  "password": "password123"
+}
+```
+
+**Fonctionnalités :**
+- Stockage sécurisé du token JWT dans SharedPreferences
+- Persistance de la session
+- Gestion des erreurs avec messages explicites
+- Redirection vers l'écran principal
+
+### 2. Liste des Professionnels
+
+**Endpoint :** `GET /api/professionals`
+
+**Affichage :**
+- Cartes avec bordure dégradée
+- Avatar circulaire avec initiales
+- Badge de spécialité
+- Score sur 100 avec icône étoile dorée
+- Actualisation par pull-to-refresh
+
+**Fonctionnalités :**
+- Tri automatique par score décroissant
+- Recherche par spécialité (future)
+- Navigation vers les détails du professionnel
+
+### 3. Détails du Professionnel
+
+**Informations affichées :**
+- Nom complet et spécialité
+- Score et nombre d'avis
+- Description professionnelle
+- Adresse du cabinet
+- Coordonnées (téléphone, email)
+
+**Créneaux disponibles :**
+```dart
+GET /api/timeslots/professional/{professionalId}/available
+```
+
+**Fonctionnalités :**
+- Liste des créneaux horaires disponibles
+- Calendrier des disponibilités
+- Sélection du créneau pour réservation
+- Formulaire de motif de consultation
+
+### 4. Prise de Rendez-vous
+
+**Processus de réservation :**
+
+1. **Sélection du créneau** : L'utilisateur choisit un horaire disponible
+2. **Motif de consultation** : Saisie du motif dans une boîte de dialogue
+3. **Confirmation** : Création du rendez-vous
+
+```dart
+POST /api/appointments
+{
+  "professionalId": "id_professionnel",
+  "timeSlotId": "id_creneau",
+  "reason": "Consultation de contrôle"
+}
+```
+
+**Statuts des rendez-vous :**
+- `CONFIRMED` : Confirmé par le professionnel
+- `PENDING` : En attente de confirmation
+- `COMPLETED` : Rendez-vous terminé
+- `CANCELLED` : Annulé
+
+### 5. Gestion des Rendez-vous
+
+**Endpoint :** `GET /api/appointments/patient`
+
+**Affichage par carte :**
+- Badge de statut coloré
+- Nom du professionnel avec icône
+- Spécialité avec badge
+- Date et heure formatées (format français)
+- Motif de consultation
+- Actions contextuelles selon le statut
+
+**Actions disponibles :**
+
+#### Annuler un rendez-vous
+```dart
+PUT /api/appointments/{id}/cancel
+```
+- Disponible pour les rendez-vous confirmés
+- Confirmation avant annulation
+- Libération automatique du créneau
+
+#### Noter un rendez-vous
+```dart
+POST /api/reviews
+{
+  "professionalId": "id_professionnel",
+  "appointmentId": "id_rendez_vous",
+  "rating": 5,
+  "comment": "Excellent professionnel"
+}
+```
+- Disponible uniquement pour les rendez-vous terminés
+- Note de 1 à 5 étoiles
+- Commentaire optionnel
+- Mise à jour automatique du score du professionnel
+
+### 6. Système de Notation
+
+**Calcul du score :**
+```
+Score = (Moyenne des notes) × 20
+```
+
+**Exemple :**
+- 3 avis : ⭐⭐⭐⭐⭐ (5), ⭐⭐⭐⭐ (4), ⭐⭐⭐⭐⭐ (5)
+- Moyenne : (5 + 4 + 5) / 3 = 4.67
+- Score : 4.67 × 20 = 93/100
+
+**Mise à jour automatique :**
+- Le score est recalculé à chaque nouvel avis
+- Synchronisation entre mobile et web
+- Score initial : 20/100 pour les nouveaux professionnels
+
+## 🔐 Sécurité
+
+### Gestion des Tokens
+```dart
+// Stockage sécurisé du token
+final prefs = await SharedPreferences.getInstance();
+await prefs.setString('token', token);
+
+// Ajout automatique dans les headers
+headers['Authorization'] = 'Bearer $token';
+```
+
+### Protection des Routes
+- Vérification du token au démarrage
+- Redirection automatique vers login si non authentifié
+- Déconnexion automatique si token expiré
+
+## 🔄 Synchronisation et Actualisation
+
+### Actualisation automatique
+- **Pull-to-refresh** sur toutes les listes
+- **Rechargement automatique** après actions (création, annulation, notation)
+- **Gestion du cache** avec SharedPreferences
+
+### Gestion des États
+```dart
+// Provider Pattern
+class AppointmentProvider with ChangeNotifier {
+  List<Appointment> _appointments = [];
+  bool _isLoading = false;
+  String? _error;
+  
+  Future<void> loadAppointments() async {
+    _isLoading = true;
+    notifyListeners();
+    // API call...
+    notifyListeners();
+  }
+}
+```
+
+## 🌐 Internationalisation
+
+### Format de Date (Français)
+```dart
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
+// Initialisation
+await initializeDateFormatting('fr_FR', null);
+
+// Usage
+DateFormat('EEEE d MMMM yyyy', 'fr_FR').format(date);
+// Affiche: "vendredi 12 décembre 2025"
+
+DateFormat('HH:mm', 'fr_FR').format(time);
+// Affiche: "16:59"
+```
+
+## 🐛 Gestion des Erreurs
+
+### Affichage des Erreurs
+```dart
+try {
+  await apiService.createAppointment(data);
+  // Succès
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text('Rendez-vous réservé avec succès')),
+  );
+} catch (e) {
+  // Erreur
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text('Erreur: $e'),
+      backgroundColor: Colors.red,
+    ),
+  );
+}
+```
+
+### Types d'Erreurs Gérées
+- Erreurs réseau (connexion API)
+- Erreurs d'authentification (token invalide)
+- Erreurs de validation (champs requis)
+- Erreurs métier (créneau non disponible, etc.)
+
+## 📊 Performance
+
+### Optimisations Implémentées
+- **Lazy Loading** : Chargement des données à la demande
+- **Caching** : Mise en cache des données utilisateur
+- **Debouncing** : Limitation des appels API redondants
+- **Pagination** : Pour les futures listes longues
+
+## 🧪 Tests
+
+### Tester l'Application
+
+**Scénario complet :**
+1. **Inscription** : Créer un compte patient
+2. **Navigation** : Explorer la liste des professionnels
+3. **Détails** : Consulter un professionnel et ses disponibilités
+4. **Réservation** : Prendre un rendez-vous
+5. **Gestion** : Voir ses rendez-vous dans "Mes rendez-vous"
+6. **Annulation** : Annuler un rendez-vous si nécessaire
+7. **Notation** : Noter un rendez-vous terminé
+8. **Déconnexion** : Se déconnecter de l'application
+
+## 📝 Dépendances Principales
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1          # Gestion d'état
+  http: ^1.1.2              # Client HTTP
+  shared_preferences: ^2.2.2 # Stockage local
+  intl: ^0.18.1             # Internationalisation
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0     # Analyse de code
+```
+
+## 🚀 Build et Déploiement
+
+### Build pour Android
+```bash
+# Debug APK
+flutter build apk --debug
+
+# Release APK
+flutter build apk --release
+
+# App Bundle (Google Play Store)
+flutter build appbundle --release
+```
+
+### Build pour iOS
+```bash
+# Ouvrir dans Xcode
+open ios/Runner.xcworkspace
+
+# Build depuis CLI
+flutter build ios --release
+```
+
+### Build pour Web
+```bash
+flutter build web --release
+```
+
+## 🔧 Configuration Avancée
+
+### Modifier l'URL de l'API
+```dart
+// lib/services/api_service.dart
+static const String baseUrl = 'https://votre-api.com/api';
+```
+
+### Personnaliser les Couleurs
+```dart
+// lib/main.dart
+theme: ThemeData(
+  colorScheme: ColorScheme.fromSeed(
+    seedColor: const Color(0xFF667eea),
+  ),
+  useMaterial3: true,
+),
+```
+
+## 📱 Compatibilité
+
+- **Android** : 5.0 (API 21) et supérieur
+- **iOS** : 12.0 et supérieur
+- **Web** : Chrome, Firefox, Safari, Edge (dernières versions)
+
+## 🤝 Contribution
+
+Pour contribuer au développement de l'application mobile :
+
+1. Fork le projet
+2. Créer une branche (`git checkout -b feature/nouvelle-fonctionnalite`)
+3. Suivre les conventions de code Flutter/Dart
+4. Tester sur plusieurs plateformes
+5. Commit avec des messages clairs
+6. Push et créer une Pull Request
+
+
+## 👨‍💻 Auteur
+
+Mohamed Soltan
+
+---
+
+**Version Mobile:** 1.0.0
 
 ## 🆕 Nouveautés - Version 2.1.0 
 
