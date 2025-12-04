@@ -34,7 +34,7 @@ class Appointment {
       professionalName: json['professionalName'] ?? '',
       professionalSpeciality: json['professionalSpeciality'] ?? '',
       appointmentTime: DateTime.parse(json['appointmentTime']),
-      status: json['status'] ?? '',
+      status: json['status']?.toString() ?? '',
       reason: json['reason'],
       notes: json['notes'],
       hasReview: json['hasReview'] ?? false,

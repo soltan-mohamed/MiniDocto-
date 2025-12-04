@@ -16,9 +16,10 @@ public class AuthResponse {
     private String roleString;
     
     private String speciality;
+    private Integer score;
     
     public AuthResponse(String token, String userId, String email, 
-                       String firstName, String lastName, UserRole role, String speciality) {
+                       String firstName, String lastName, UserRole role, String speciality, Integer score) {
         this.token = token;
         this.userId = userId;
         this.email = email;
@@ -26,5 +27,6 @@ public class AuthResponse {
         this.lastName = lastName;
         this.roleString = role != null ? role.name() : null;
         this.speciality = speciality;
+        this.score = score;
     }
 }

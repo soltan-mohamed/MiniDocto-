@@ -57,4 +57,11 @@ export const appointmentService = {
   },
 }
 
+export const userService = {
+  getProfile: async () => {
+    const response = await api.get('/auth/me')
+    return response.data
+  },
+}
+
 export default api

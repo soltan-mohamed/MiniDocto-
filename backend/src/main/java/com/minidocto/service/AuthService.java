@@ -46,6 +46,8 @@ public class AuthService {
             user.setDescription(request.getDescription());
             user.setAddress(request.getAddress());
             user.setScore(20);
+        } else {
+            user.setScore(0);
         }
         
         user = userRepository.save(user);
@@ -59,7 +61,8 @@ public class AuthService {
             user.getFirstName(),
             user.getLastName(),
             user.getRole(),
-            user.getSpeciality()
+            user.getSpeciality(),
+            user.getScore()
         );
     }
     
@@ -75,6 +78,11 @@ public class AuthService {
             throw new BadRequestException("Ce compte est désactivé");
         }
         
+        if (user.getScore() == null) {
+            user.setScore(user.getRole() == UserRole.PROFESSIONAL ? 20 : 0);
+            userRepository.save(user);
+        }
+        
         String token = tokenProvider.generateToken(user.getId(), user.getEmail());
         
         return new AuthResponse(
@@ -84,7 +92,8 @@ public class AuthService {
             user.getFirstName(),
             user.getLastName(),
             user.getRole(),
-            user.getSpeciality()
+            user.getSpeciality(),
+            user.getScore()
         );
     }
 }

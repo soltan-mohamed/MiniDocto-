@@ -18,4 +18,5 @@ public class AppointmentResponse {
     private String reason;
     private String notes;
     private boolean hasReview;
+    private Integer reviewRating;
 }

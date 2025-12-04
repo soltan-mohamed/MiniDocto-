@@ -32,7 +32,7 @@ public class User {
     
     private String description;
     
-    private Integer score;
+    private Integer score = 20;
     
     private String address;
     

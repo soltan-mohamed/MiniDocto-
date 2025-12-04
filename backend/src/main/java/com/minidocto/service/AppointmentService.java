@@ -6,6 +6,7 @@ import com.minidocto.exception.BadRequestException;
 import com.minidocto.exception.NotFoundException;
 import com.minidocto.model.*;
 import com.minidocto.repository.AppointmentRepository;
+import com.minidocto.repository.ReviewRepository;
 import com.minidocto.repository.TimeSlotRepository;
 import com.minidocto.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class AppointmentService {
     
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private ReviewRepository reviewRepository;
     
     @Transactional
     public Appointment createAppointment(String patientId, AppointmentRequest request) {
@@ -88,7 +92,6 @@ public class AppointmentService {
             throw new BadRequestException("Vous ne pouvez modifier que vos propres rendez-vous");
         }
         
-        // Libérer l'ancien créneau
         TimeSlot oldSlot = timeSlotRepository.findById(appointment.getTimeSlotId())
             .orElse(null);
         if (oldSlot != null) {
@@ -96,7 +99,6 @@ public class AppointmentService {
             timeSlotRepository.save(oldSlot);
         }
         
-        // Réserver le nouveau créneau
         TimeSlot newSlot = timeSlotRepository.findById(request.getTimeSlotId())
             .orElseThrow(() -> new NotFoundException("Créneau non trouvé"));
         
@@ -125,7 +127,6 @@ public class AppointmentService {
             throw new BadRequestException("Vous ne pouvez annuler que vos propres rendez-vous");
         }
         
-        // Libérer le créneau
         TimeSlot timeSlot = timeSlotRepository.findById(appointment.getTimeSlotId())
             .orElse(null);
         if (timeSlot != null) {
@@ -149,16 +150,20 @@ public class AppointmentService {
         response.setNotes(appointment.getNotes());
         response.setHasReview(appointment.isHasReview());
         
-        // Charger les informations du patient
         userRepository.findById(appointment.getPatientId()).ifPresent(patient -> {
             response.setPatientName(patient.getFirstName() + " " + patient.getLastName());
         });
         
-        // Charger les informations du professionnel
         userRepository.findById(appointment.getProfessionalId()).ifPresent(professional -> {
             response.setProfessionalName(professional.getFirstName() + " " + professional.getLastName());
             response.setProfessionalSpeciality(professional.getSpeciality());
         });
+        
+        if (appointment.isHasReview()) {
+            reviewRepository.findByAppointmentId(appointment.getId()).ifPresent(review -> {
+                response.setReviewRating(review.getRating());
+            });
+        }
         
         return response;
     }
