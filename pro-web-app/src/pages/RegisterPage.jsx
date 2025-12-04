@@ -73,7 +73,7 @@ function RegisterPage({ onRegister }) {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                placeholder="Jean"
+                placeholder="Mohamed"
               />
             </div>
 
@@ -88,7 +88,7 @@ function RegisterPage({ onRegister }) {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                placeholder="Dupont"
+                placeholder="Soltan"
               />
             </div>
           </div>
@@ -104,7 +104,7 @@ function RegisterPage({ onRegister }) {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="jean.dupont@exemple.com"
+              placeholder="professionnel@gmail.com"
             />
           </div>
 
@@ -149,7 +149,7 @@ function RegisterPage({ onRegister }) {
               value={formData.address}
               onChange={handleChange}
               required
-              placeholder="123 Avenue de la Santé, Tunis"
+              placeholder="2088 Avenue de la Santé, Tunis"
             />
           </div>
 

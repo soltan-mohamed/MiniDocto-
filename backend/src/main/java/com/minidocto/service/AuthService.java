@@ -58,7 +58,8 @@ public class AuthService {
             user.getEmail(),
             user.getFirstName(),
             user.getLastName(),
-            user.getRole()
+            user.getRole(),
+            user.getSpeciality()
         );
     }
     
@@ -82,7 +83,8 @@ public class AuthService {
             user.getEmail(),
             user.getFirstName(),
             user.getLastName(),
-            user.getRole()
+            user.getRole(),
+            user.getSpeciality()
         );
     }
 }

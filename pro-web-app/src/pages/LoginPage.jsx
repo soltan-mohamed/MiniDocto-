@@ -53,7 +53,7 @@ function LoginPage({ onLogin }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="professionnel@exemple.com"
+              placeholder="professionnel@gmail.com"
             />
           </div>
 
