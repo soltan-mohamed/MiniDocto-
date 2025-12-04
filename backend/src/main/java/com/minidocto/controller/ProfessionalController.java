@@ -15,8 +15,14 @@ public class ProfessionalController {
     @Autowired
     private ProfessionalService professionalService;
     
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<ProfessionalResponse>> getAllProfessionals() {
+        List<ProfessionalResponse> professionals = professionalService.getAllProfessionals();
+        return ResponseEntity.ok(professionals);
+    }
+    
+    @GetMapping("/list")
+    public ResponseEntity<List<ProfessionalResponse>> getProfessionalsList() {
         List<ProfessionalResponse> professionals = professionalService.getAllProfessionals();
         return ResponseEntity.ok(professionals);
     }

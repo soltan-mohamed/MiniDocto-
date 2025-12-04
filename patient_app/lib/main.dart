@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'providers/auth_provider.dart';
+import 'providers/professional_provider.dart';
+import 'providers/appointment_provider.dart';
 import 'screens/auth/login_screen.dart';
 import 'screens/home/home_screen.dart';
 
@@ -19,6 +21,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ProfessionalProvider()),
+        ChangeNotifierProvider(create: (_) => AppointmentProvider()),
       ],
       child: Consumer<AuthProvider>(
         builder: (context, authProvider, _) {

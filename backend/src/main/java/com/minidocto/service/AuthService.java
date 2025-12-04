@@ -45,7 +45,7 @@ public class AuthService {
             user.setSpeciality(request.getSpeciality());
             user.setDescription(request.getDescription());
             user.setAddress(request.getAddress());
-            user.setScore(50); // Score initial
+            user.setScore(20);
         }
         
         user = userRepository.save(user);
