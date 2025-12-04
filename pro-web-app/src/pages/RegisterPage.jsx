@@ -48,96 +48,130 @@ function RegisterPage({ onRegister }) {
     <div className="auth-container">
       <div className="auth-card register-card">
         <div className="auth-header">
-          <div className="auth-icon">🏥</div>
-          <h1>Inscription Professionnel</h1>
-          <p>Créez votre compte professionnel</p>
+          <div className="auth-icon">🩺</div>
+          <h1>Rejoignez MiniDocto+</h1>
+          <p>Créez votre profil professionnel en quelques clics</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message">
+              <span className="error-icon">⚠️</span>
+              {error}
+            </div>
+          )}
 
           <div className="form-row">
             <div className="form-group">
-              <label>Prénom *</label>
+              <label>
+                <span className="label-icon">👤</span>
+                Prénom *
+              </label>
               <input
                 type="text"
                 name="firstName"
                 value={formData.firstName}
                 onChange={handleChange}
                 required
+                placeholder="Jean"
               />
             </div>
 
             <div className="form-group">
-              <label>Nom *</label>
+              <label>
+                <span className="label-icon">👤</span>
+                Nom *
+              </label>
               <input
                 type="text"
                 name="lastName"
                 value={formData.lastName}
                 onChange={handleChange}
                 required
+                placeholder="Dupont"
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Email *</label>
+            <label>
+              <span className="label-icon">📧</span>
+              Email *
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
+              placeholder="jean.dupont@exemple.com"
             />
           </div>
 
           <div className="form-group">
-            <label>Téléphone *</label>
+            <label>
+              <span className="label-icon">📱</span>
+              Téléphone *
+            </label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               required
+              placeholder="+216 XX XXX XXX"
             />
           </div>
 
           <div className="form-group">
-            <label>Spécialité *</label>
+            <label>
+              <span className="label-icon">🩺</span>
+              Spécialité *
+            </label>
             <input
               type="text"
               name="speciality"
               value={formData.speciality}
               onChange={handleChange}
-              placeholder="Ex: Cardiologue, Dentiste..."
+              placeholder="Ex: Cardiologue, Dentiste, Pédiatre..."
               required
             />
           </div>
 
           <div className="form-group">
-            <label>Adresse *</label>
+            <label>
+              <span className="label-icon">📍</span>
+              Adresse du cabinet *
+            </label>
             <input
               type="text"
               name="address"
               value={formData.address}
               onChange={handleChange}
               required
+              placeholder="123 Avenue de la Santé, Tunis"
             />
           </div>
 
           <div className="form-group">
-            <label>Description</label>
+            <label>
+              <span className="label-icon">✍️</span>
+              Description professionnelle
+            </label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              placeholder="Parlez de votre expérience et expertise..."
+              placeholder="Présentez votre expérience, vos compétences et votre approche médicale..."
             />
           </div>
 
           <div className="form-group">
-            <label>Mot de passe *</label>
+            <label>
+              <span className="label-icon">🔒</span>
+              Mot de passe *
+            </label>
             <input
               type="password"
               name="password"
@@ -145,18 +179,29 @@ function RegisterPage({ onRegister }) {
               onChange={handleChange}
               required
               minLength="6"
+              placeholder="Minimum 6 caractères"
             />
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Inscription...' : 'S\'inscrire'}
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Création du compte...
+              </>
+            ) : (
+              <>
+                <span>🚀</span>
+                Créer mon compte professionnel
+              </>
+            )}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            Déjà un compte ?{' '}
-            <Link to="/login">Se connecter</Link>
+            Déjà inscrit ?{' '}
+            <Link to="/login">✨ Se connecter</Link>
           </p>
         </div>
       </div>

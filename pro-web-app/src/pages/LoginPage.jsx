@@ -31,26 +31,37 @@ function LoginPage({ onLogin }) {
       <div className="auth-card">
         <div className="auth-header">
           <div className="auth-icon">🏥</div>
-          <h1>Mini-Docto Plus</h1>
-          <p>Espace Professionnel</p>
+          <h1>MiniDocto+</h1>
+          <p>Espace Professionnel de Santé</p>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
-          {error && <div className="error-message">{error}</div>}
+          {error && (
+            <div className="error-message">
+              <span className="error-icon">⚠️</span>
+              {error}
+            </div>
+          )}
 
           <div className="form-group">
-            <label>Email</label>
+            <label>
+              <span className="label-icon">📧</span>
+              Adresse Email
+            </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="votre@email.com"
+              placeholder="professionnel@exemple.com"
             />
           </div>
 
           <div className="form-group">
-            <label>Mot de passe</label>
+            <label>
+              <span className="label-icon">🔒</span>
+              Mot de passe
+            </label>
             <input
               type="password"
               value={password}
@@ -61,14 +72,24 @@ function LoginPage({ onLogin }) {
           </div>
 
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Connexion...' : 'Se connecter'}
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Connexion en cours...
+              </>
+            ) : (
+              <>
+                <span>✨</span>
+                Se connecter
+              </>
+            )}
           </button>
         </form>
 
         <div className="auth-footer">
           <p>
-            Pas encore de compte ?{' '}
-            <Link to="/register">S'inscrire</Link>
+            Nouveau sur MiniDocto+ ?{' '}
+            <Link to="/register">🚀 Créer un compte</Link>
           </p>
         </div>
       </div>
